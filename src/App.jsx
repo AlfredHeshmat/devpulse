@@ -8,6 +8,8 @@ function App() {
   const [repos, setRepos] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [repoSearch, setRepoSearch] = useState("");
+  const [darkMode, setDarkMode] = useState(true);
 
   const searchUser = async () => {
     if (!username.trim()) {
@@ -18,10 +20,13 @@ function App() {
     setError("");
     setUser(null);
     setRepos([]);
+    setRepoSearch("");
     setLoading(true);
 
     try {
-      const userResponse = await fetch(`https://api.github.com/users/${username}`);
+      const userResponse = await fetch(
+        `https://api.github.com/users/${username}`
+      );
 
       if (!userResponse.ok) {
         throw new Error("GitHub user not found");
@@ -67,13 +72,23 @@ function App() {
       ? Object.entries(languageCount).sort((a, b) => b[1] - a[1])[0][0]
       : "N/A";
 
+  const filteredRepos = repos
+    .filter((repo) =>
+      repo.name.toLowerCase().includes(repoSearch.toLowerCase())
+    )
+    .sort((a, b) => b.stargazers_count - a.stargazers_count);
+
   return (
-    <div className="app">
+    <div className={darkMode ? "app dark" : "app light"}>
       <h1>
         <FaGithub /> DevPulse
       </h1>
 
       <p className="subtitle">Search any GitHub developer profile</p>
+
+      <button className="theme-btn" onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? "Light Mode" : "Dark Mode"}
+      </button>
 
       <div className="search-box">
         <input
@@ -91,7 +106,7 @@ function App() {
         </button>
       </div>
 
-      {loading && <p className="loading">Loading GitHub data...</p>}
+      {loading && <div className="spinner"></div>}
       {error && <p className="error">{error}</p>}
 
       {user && (
@@ -158,10 +173,16 @@ function App() {
         <div className="profile-card">
           <h2>Top Repositories</h2>
 
-          {[...repos]
-            .sort((a, b) => b.stargazers_count - a.stargazers_count)
-            .slice(0, 5)
-            .map((repo) => (
+          <input
+            type="text"
+            placeholder="Filter repositories..."
+            value={repoSearch}
+            onChange={(e) => setRepoSearch(e.target.value)}
+            className="repo-search"
+          />
+
+          {filteredRepos.length > 0 ? (
+            filteredRepos.slice(0, 5).map((repo) => (
               <div key={repo.id} className="repo-item">
                 <a
                   href={repo.html_url}
@@ -174,9 +195,14 @@ function App() {
 
                 <p>⭐ {repo.stargazers_count}</p>
                 <p>{repo.language || "No language listed"}</p>
-                <p>Updated: {new Date(repo.updated_at).toLocaleDateString()}</p>
+                <p>
+                  Updated: {new Date(repo.updated_at).toLocaleDateString()}
+                </p>
               </div>
-            ))}
+            ))
+          ) : (
+            <p>No repositories match your search.</p>
+          )}
         </div>
       )}
 
