@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  background: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+h1 {
+  color: white;
+  font-size: 56px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+input {
+  padding: 14px;
+  width: 300px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #3b82f6;
+  color: white;
+  font-size: 16px;
+}
+
+button:hover,
+.github-btn:hover {
+  background: #2563eb;
+}
+
+.profile-card {
+  width: 500px;
+  max-width: 90%;
+  margin: 35px auto;
+  background: #1e293b;
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.profile-card img {
+  width: 140px;
+  border-radius: 50%;
+  border: 4px solid #3b82f6;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.github-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.repo-item {
+  margin-top: 24px;
+  padding: 18px;
+  background: #0f172a;
+  border-radius: 14px;
+}
+
+.repo-link {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.repo-link:hover {
+  color: #3b82f6;
+}
+
+.error {
+  color: #f87171;
+  margin-top: 20px;
+}
+
+.loading {
+  color: #93c5fd;
+  margin-top: 20px;
+}
+
+footer {
+  margin-top: 40px;
+  color: #94a3b8;
+}
